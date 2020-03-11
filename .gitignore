@@ -1,0 +1,10 @@
+/*
+/*/
+!/src/
+/src/out/*
+/src/.idea/*
+!.gitignore
+!/dist/
+!/Resources/
+!Report.docx
+!Report.pdf
