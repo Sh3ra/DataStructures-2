@@ -5,17 +5,19 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class Heap implements IHeap {
+    private int size=0;
     private ArrayList<INode> heapArray = new ArrayList<>(2);
+    private ArrayList<INode> sortedHeap = new ArrayList<>();
     @Override
     public INode getRoot() {
-        if(heapArray.size()>0)
+        if(size()>0)
         return heapArray.get(0);
         else return null;
     }
 
     @Override
     public int size() {
-        return heapArray.size();
+        return size;
     }
 
     @Override
@@ -23,7 +25,9 @@ public class Heap implements IHeap {
         if((var1.getLeftChild()==null&&var1.getRightChild()==null)||(var1==null))
             return;
         INode right=var1.getRightChild();
+        if(sortedHeap.contains(right))right=null;
         INode left=var1.getLeftChild();
+        if(sortedHeap.contains(left))left=null;
         INode tempN;
         if(left!=null&&var1.getValue().compareTo(left.getValue())<0)
         {
@@ -52,9 +56,10 @@ public class Heap implements IHeap {
     @Override
     public Comparable extract() {
         Comparable t=getRoot().getValue();
-        swap(getRoot(),heapArray.get(heapArray.size()-1));
-        heapArray.remove(size()-1);
-        if(heapArray.size()>0)
+        swap(getRoot(),heapArray.get(size()-1));
+        sortedHeap.add(heapArray.get(size()-1));
+        size--;
+        if(size()>0)
             heapify(getRoot());
         return  t;
     }
@@ -63,6 +68,7 @@ public class Heap implements IHeap {
     public void insert(Comparable var1) {
         INode newNode = new Node(var1, heapArray.size()-1, heapArray);
         heapArray.add(newNode);
+        size++;
         decreaseKey(newNode);
     }
 
@@ -74,13 +80,14 @@ public class Heap implements IHeap {
             INode iNode=new Node((Comparable) temp.get(i),i,heapArray);
             heapArray.add(iNode);
         }
+        size=heapArray.size();
         //heapArray=(ArrayList<INode>)var1;
-        for(int index=heapArray.size()/2;index>=0;index--)
+        for(int index=size()/2;index>=0;index--)
         {
             heapify(heapArray.get(index));
         }
         int index=0;
-    /*
+
       while (index<heapArray.size())
         {
             INode p=heapArray.get(index);
@@ -88,16 +95,16 @@ public class Heap implements IHeap {
             INode l=p.getLeftChild();
             index++;
         }
-       */
+
     }
 
     public static void main(String[] args) {
         ArrayList arr=new ArrayList();
-       /* arr.add(2);
+        arr.add(2);
         arr.add(8);
         arr.add(14);
         arr.add(3);
-        arr.add(9);*/
+        arr.add(9);
         arr.add(1);
         arr.add(16);
         arr.add(10);
