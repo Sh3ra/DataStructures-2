@@ -52,7 +52,7 @@ public class Heap implements IHeap {
 
     @Override
     public Comparable extract() {
-        return null;
+        return (Comparable) getRoot();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Heap implements IHeap {
             heapArray.add(iNode);
         }
         //heapArray=(ArrayList<INode>)var1;
-        for(int index=heapArray.size()/2;index>=0;index--)
+        for(int index=heapArray.size()/2;index>0;index--)
         {
             heapify(heapArray.get(index));
         }
