@@ -2,7 +2,7 @@ package eg.edu.alexu.csd.filestructure.sort;
 
 import java.util.ArrayList;
 
-public class Node implements INode {
+public class Node <T extends Comparable<T>> implements INode {
     private Comparable value;
     private int index;
     private ArrayList<INode> heapArray;

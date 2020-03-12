@@ -27,7 +27,7 @@ public class Heap implements IHeap {
         if(var1.getParent() != null) {
             if(var1.getValue().compareTo(var1.getParent().getValue()) > 0)
                 swap(var1,var1.getParent());
-            heapify(var1.getParent());
+            decreaseKey(var1.getParent());
         }
     }
 
@@ -40,7 +40,7 @@ public class Heap implements IHeap {
     public void insert(Comparable var1) {
         INode newNode = new Node(var1, heapArray.size()-1, heapArray);
         heapArray.add(newNode);
-        heapify(newNode);
+        decreaseKey(newNode);
     }
 
     @Override
