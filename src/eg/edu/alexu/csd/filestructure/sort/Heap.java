@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class Heap implements IHeap {
-    private ArrayList heapArray = new ArrayList<>(2);
+    private ArrayList<INode> heapArray = new ArrayList<>(2);
     @Override
     public INode getRoot() {
         if(heapArray.size()>2) {
@@ -51,10 +51,10 @@ public class Heap implements IHeap {
         if(index<0)return;
         while (index>=0)
         {
-            Node parent=new Node((Comparable) heapArray.get(index),index,heapArray);
-            parent= (Node) parent.getParent();
-            Node right= (Node) parent.getRightChild();
-            Node left=(Node)parent.getLeftChild();
+            INode parent= (INode) heapArray.get(index);
+            parent= (INode) parent.getParent();
+            INode right= (INode) parent.getRightChild();
+            INode left=(INode)parent.getLeftChild();
             if(parent.getValue().compareTo(left.getValue())<0)
             {
                 swap(left,parent);
@@ -64,9 +64,8 @@ public class Heap implements IHeap {
                 swap(right,parent);
             }
             index--;
-            heapArray=parent.heapArray;
+          //  heapArray=parent.heapArray;
         }
-
     }
 
     public static void main(String[] args) {
