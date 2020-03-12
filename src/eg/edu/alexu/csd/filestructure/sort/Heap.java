@@ -21,7 +21,25 @@ public class Heap implements IHeap {
 
     @Override
     public void heapify(INode var1){
+        if(var1.getLeftChild()==null&&var1.getRightChild()==null)
+            return;
+        INode right=var1.getRightChild();
+        INode left=var1.getLeftChild();
+        INode tempN;
+        if(left!=null&&var1.getValue().compareTo(left.getValue())<0)
+        {
+            tempN=left;
+        }
+        else tempN=var1;
+        if(right!=null&&tempN.getValue().compareTo(right.getValue())<0)
+        {
+            tempN=right;
+        }
+        if(tempN!=var1){
 
+            swap(tempN,var1);
+            heapify(tempN);
+        }
     }
 
     private void decreaseKey(INode var1){
@@ -46,36 +64,41 @@ public class Heap implements IHeap {
 
     @Override
     public void build(Collection var1) {
-        heapArray=(ArrayList)var1;
-        int index=heapArray.size()-1;
-        if(index<0)return;
-        while (index>=0)
+        ArrayList temp= (ArrayList) var1;
+        for(int i=0;i<temp.size();i++)
         {
-            INode parent= (INode) heapArray.get(index);
-            parent= (INode) parent.getParent();
-            INode right= (INode) parent.getRightChild();
-            INode left=(INode)parent.getLeftChild();
-            if(parent.getValue().compareTo(left.getValue())<0)
-            {
-                swap(left,parent);
-            }
-            if(parent.getValue().compareTo(right.getValue())<0)
-            {
-                swap(right,parent);
-            }
-            index--;
-          //  heapArray=parent.heapArray;
+            INode iNode=new Node((Comparable) temp.get(i),i,heapArray);
+            heapArray.add(iNode);
         }
+        //heapArray=(ArrayList<INode>)var1;
+        for(int index=heapArray.size()/2;index>=0;index--)
+        {
+            heapify(heapArray.get(index));
+        }
+        int index=0;
+      /*
+      while (index<heapArray.size())
+        {
+            INode p=heapArray.get(index);
+            INode r=p.getRightChild();
+            INode l=p.getLeftChild();
+            index++;
+        }
+        */
     }
 
     public static void main(String[] args) {
         ArrayList arr=new ArrayList();
-        arr.add(7);
         arr.add(2);
-        arr.add(4);
-        arr.add(5);
-        arr.add(10);
         arr.add(8);
+        arr.add(14);
+        arr.add(3);
+        arr.add(9);
+        arr.add(1);
+        arr.add(16);
+        arr.add(10);
+        arr.add(4);
+        arr.add(7);
         Heap heap=new Heap();
         heap.build(arr);
     }
