@@ -87,7 +87,7 @@ public class Heap implements IHeap {
             heapify(heapArray.get(index));
         }
         int index=0;
-
+        /*
       while (index<heapArray.size())
         {
             INode p=heapArray.get(index);
@@ -95,7 +95,7 @@ public class Heap implements IHeap {
             INode l=p.getLeftChild();
             index++;
         }
-
+        */
     }
 
     public static void main(String[] args) {
