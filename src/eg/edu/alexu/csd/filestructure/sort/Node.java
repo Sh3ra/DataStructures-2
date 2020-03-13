@@ -34,7 +34,7 @@ public class Node <T extends Comparable<T>> implements INode {
 
     @Override
     public INode getParent() {
-        if(index != 1) {
+        if(index > 1) {
             return heapArray.get((index /2)-1);
         }
         return null;

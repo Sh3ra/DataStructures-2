@@ -6,7 +6,7 @@ import java.util.Collections;
 
 public class Heap implements IHeap {
     private int size=0;
-    private ArrayList<INode> heapArray = new ArrayList<>(2);
+    private ArrayList<INode> heapArray = new ArrayList<>();
     private ArrayList<INode> sortedHeap = new ArrayList<>();
     @Override
     public INode getRoot() {
@@ -21,7 +21,7 @@ public class Heap implements IHeap {
     }
 
     @Override
-    public void heapify(INode var1){
+    public void heapify(INode var1) {
         if((var1.getLeftChild()==null&&var1.getRightChild()==null)||(var1==null))
             return;
         INode right=var1.getRightChild();
@@ -100,21 +100,18 @@ public class Heap implements IHeap {
 
     public static void main(String[] args) {
         ArrayList arr=new ArrayList();
-        arr.add(2);
-        arr.add(8);
-        arr.add(14);
-        arr.add(3);
-        arr.add(9);
-        arr.add(1);
-        arr.add(16);
-        arr.add(10);
-        arr.add(4);
-        arr.add(7);
         Heap heap=new Heap();
-        heap.build(arr);
+        heap.insert(7);
+        heap.insert(8);
+        heap.insert(10);
+        heap.insert(7);
+        heap.insert(1);
+        heap.insert(15);
+        heap.insert(20);
+        heap.insert(8);
         int s=heap.size();
-        for (int i=0;i<s;i++){
-            System.out.println(heap.extract());
+        for (int i = 0; i <heap.heapArray.size(); i++){
+            System.out.println(heap.heapArray.get(i).getValue());
         }
     }
     private void swap(INode child, INode parent){
