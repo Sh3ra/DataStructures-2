@@ -66,8 +66,10 @@ public class Heap implements IHeap {
 
     @Override
     public void insert(Comparable var1) {
-        INode newNode = new Node(var1, heapArray.size()-1, heapArray);
+        INode newNode = new Node(var1, size(), heapArray);
+        if(size()==heapArray.size())
         heapArray.add(newNode);
+        else heapArray.set(size(),newNode);
         size++;
         decreaseKey(newNode);
     }

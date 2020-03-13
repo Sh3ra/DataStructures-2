@@ -12,9 +12,9 @@ public class Sort implements ISort {
     public IHeap heapSort(ArrayList var1) {
         IHeap heap =new Heap();
         heap.build(var1);
-        for(int i=0;i<var1.size();i++)
+        for(int i=1;i<=var1.size();i++)
         {
-            Comparable t=heap.extract();
+            var1.set(var1.size() - i, heap.extract());
         }
         return heap;
     }
