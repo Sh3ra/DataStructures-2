@@ -6,15 +6,17 @@ public class Node <T extends Comparable<T>> implements INode {
     private Comparable value;
     private int index;
     private ArrayList<INode> heapArray;
-    public Node (Comparable value, int index, ArrayList<INode> heapArray){
+    private IHeap heap;
+    public Node (Comparable value, int index, ArrayList<INode> heapArray, IHeap heap){
         this.value = value;
-        this.index = index+1;
+        this.index = index;
         this.heapArray = heapArray;
+        this.heap = heap;
     }
     @Override
     public INode getLeftChild() {
-        if(heapArray.size()>((index<<1))-1) {
-            return heapArray.get((index << 1)-1);
+        if(heap.size()>=((index<<1))) {
+            return heapArray.get((index<<1));
         }
         return null;
     }
@@ -25,8 +27,8 @@ public class Node <T extends Comparable<T>> implements INode {
 
     @Override
     public INode getRightChild() {
-        if(heapArray.size()>((index<<1))) {
-            return heapArray.get((index << 1));
+        if(heap.size()>=(index<<1)+1) {
+            return heapArray.get((index << 1)+1);
         }
         return null;
     }
@@ -35,7 +37,7 @@ public class Node <T extends Comparable<T>> implements INode {
     @Override
     public INode getParent() {
         if(index > 1) {
-            return heapArray.get((index /2)-1);
+            return heapArray.get(index >> 1);
         }
         return null;
     }
