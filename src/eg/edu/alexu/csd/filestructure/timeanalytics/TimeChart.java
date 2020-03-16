@@ -2,10 +2,7 @@ package eg.edu.alexu.csd.filestructure.timeanalytics;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -36,9 +33,9 @@ public class TimeChart extends Application {
         NumberAxis yAxis3=new NumberAxis();
         yAxis3.setLabel("RunTime(ms)");
         yAxis3.setLowerBound(0.0001);
-        LineChart<Number,Number> lineChart1=new LineChart<Number, Number>(xAis,yAxis);
-        LineChart<Number,Number> lineChart2=new LineChart<Number, Number>(xAis2,yAxis2);
-        LineChart<Number,Number> lineChart3=new LineChart<Number, Number>(xAis3,yAxis3);
+        ScatterChart<Number,Number> lineChart1=new ScatterChart<>(xAis,yAxis);
+        ScatterChart<Number,Number> lineChart2=new ScatterChart<Number, Number>(xAis2,yAxis2);
+        ScatterChart<Number,Number> lineChart3=new ScatterChart<Number, Number>(xAis3,yAxis3);
         lineChart1.setTitle("Comparison between sorting algorithms");
         lineChart2.setTitle("Comparison between sorting algorithms");
         lineChart3.setTitle("Comparison between sorting algorithms");
@@ -55,7 +52,7 @@ public class TimeChart extends Application {
         data2.setName("Fast Sort<Quick Sort>");
         data3.setName("Heap Sort");
 
-        for(int i=0;i<n2time.size();i=i+50) {
+        for(int i=0;i<n2time.size();i=i+1) {
             data1.getData().add(new XYChart.Data<Number, Number>(i, n2time.get(i)));
             data2.getData().add(new XYChart.Data<Number, Number>(i, nlogn.get(i)));
             data3.getData().add(new XYChart.Data<Number, Number>(i, heaptime.get(i)));

@@ -30,7 +30,7 @@ public class DataGeneration {
     private static ArrayList<Integer> nlongntime=new ArrayList<>();
     private static ArrayList<Integer> heaptime=new ArrayList<>();
 
-    private static int n=1000;
+    private static int n=5000;
     public static void generateData() {
         Random r = new Random();
         Sort sort=new Sort<>();
