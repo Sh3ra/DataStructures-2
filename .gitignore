@@ -8,4 +8,5 @@
 !/Resources/
 !Report.docx
 !Report.pdf
-!RedBlackTree
+!RedBlackTree/src
+!Heap_HeapSorting/src
