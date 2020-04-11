@@ -1,68 +1,72 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
 public class Node implements INode {
+    INode parent=null;
+    INode rightChild=null;
+    INode leftChild=null;
+    Comparable key=null;
+    Object value=null;
+    boolean color=true;//red=true black=false
     @Override
     public void setParent(INode parent) {
-
+        this.parent=parent;
     }
-    //test
+
     @Override
     public INode getParent() {
-        return null;
+        return parent;
     }
 
     @Override
     public void setLeftChild(INode leftChild) {
-
+        this.leftChild=leftChild;
     }
 
     @Override
     public INode getLeftChild() {
-        return null;
+        return leftChild;
     }
 
     @Override
     public void setRightChild(INode rightChild) {
-
+        this.rightChild=rightChild;
     }
 
     @Override
     public INode getRightChild() {
-        return null;
+        return rightChild;
     }
 
     @Override
     public Comparable getKey() {
-        return null;
+        return key;
     }
 
     @Override
     public void setKey(Comparable key) {
-
+        this.key=key;
     }
 
     @Override
     public Object getValue() {
-        return null;
+        return value;
     }
 
     @Override
     public void setValue(Object value) {
-
+        this.value=value;
     }
 
     @Override
     public boolean getColor() {
-        return false;
+        return color;
     }
 
     @Override
     public void setColor(boolean color) {
-
+        this.color=color;
     }
 
     @Override
-    public boolean isNull() {
-        return false;
-    }
+    public boolean isNull() { return value==null; }
 }
