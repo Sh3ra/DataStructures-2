@@ -1,9 +1,9 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
 public class Node implements INode {
-    INode parent=null;
-    INode rightChild=null;
-    INode leftChild=null;
+    INode parent;
+    INode rightChild;
+    INode leftChild;
     Comparable key=null;
     Object value=null;
     boolean color=true;//red=true black=false

@@ -15,8 +15,18 @@ public class RedBlackTree implements IRedBlackTree {
 
     @Override
     public Object search(Comparable key) {
-
-        return null;
+        if(isEmpty())return null;
+        INode curr=getRoot();
+        while (!curr.isNull()&&curr.getKey()!=key)
+        {
+            if(key.compareTo(curr.getKey())>0)
+            {
+                curr=curr.getRightChild();
+            }
+            else
+                curr=curr.getLeftChild();
+        }
+        return curr.getValue();
     }
 
     @Override
