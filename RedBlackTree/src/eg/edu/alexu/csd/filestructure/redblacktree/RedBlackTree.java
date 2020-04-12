@@ -1,5 +1,6 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
+import com.sun.corba.se.impl.resolver.INSURLOperationImpl;
 import javafx.util.Pair;
 
 public class RedBlackTree implements IRedBlackTree {
@@ -131,8 +132,59 @@ public class RedBlackTree implements IRedBlackTree {
         */
     }
 
+
+    boolean getRightOrLeft(INode parent, INode node){
+        if(parent.getRightChild() == node) return true;
+        return false;
+    }
+
+    void changeParent(INode parent, INode child, INode  node){
+        if(parent == null){
+            root  = child;
+        }
+        else if(getRightOrLeft(parent, node)){
+            parent.setRightChild(child);
+            child.setParent(parent);
+        } else {
+            parent.setLeftChild(child);
+            child.setParent(parent);
+        }
+    }
+
+    void rotateLeft(INode node) {
+        INode child = node.getRightChild();
+        INode parent = node.getParent();
+        INode rlChild = node.getRightChild().getLeftChild();
+        changeParent(parent,child,node);
+        child.setLeftChild(node);
+        node.setParent(child);
+        node.setRightChild(rlChild);
+        if(rlChild != null) rlChild.setParent(node);
+    }
+
+    void rotateRight(INode node) {
+        INode child = node.getLeftChild();
+        INode parent = node.getLeftChild();
+        INode lrChild = node.getLeftChild().getRightChild();
+        changeParent(parent,child,node);
+        child.setRightChild(node);
+        node.setParent(child);
+        node.setLeftChild(lrChild);
+        if(lrChild!= null) lrChild.setParent(node);
+    }
+
+    boolean bstDelete(INode root, Comparable key){
+
+    }
+    
     @Override
     public boolean delete(Comparable key) {
-        return false;
+        boolean deleteComplete = bstDelete(getRoot(),key);
+        if(deleteComplete) {
+            fix_up_delete();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

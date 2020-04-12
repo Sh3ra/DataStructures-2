@@ -4,9 +4,9 @@ public class Node implements INode {
     INode parent;
     INode rightChild;
     INode leftChild;
-    Comparable key=null;
-    Object value=null;
-    boolean color=false;//red=true black=false
+    Comparable key = null;
+    Object value = null;
+    boolean color = BLACK;//red=true black=false
     @Override
     public void setParent(INode parent) {
         this.parent=parent;
