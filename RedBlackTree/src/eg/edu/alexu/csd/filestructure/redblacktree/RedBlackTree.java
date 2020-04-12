@@ -141,13 +141,14 @@ public class RedBlackTree implements IRedBlackTree {
     void changeParent(INode parent, INode child, INode  node){
         if(parent == null){
             root  = child;
+            child.setParent(null);
         }
         else if(getRightOrLeft(parent, node)){
             parent.setRightChild(child);
-            child.setParent(parent);
+            if(child != null) child.setParent(parent);
         } else {
             parent.setLeftChild(child);
-            child.setParent(parent);
+            if(child != null) child.setParent(parent);
         }
     }
 
@@ -173,13 +174,59 @@ public class RedBlackTree implements IRedBlackTree {
         if(lrChild!= null) lrChild.setParent(node);
     }
 
-    boolean bstDelete(INode root, Comparable key){
+    INode getNode (INode node, Comparable key) {
+        INode right = node.getRightChild();
+        INode left = node.getLeftChild();
+        if(node.getKey().compareTo(key) == 0) return node;
+        if(right != null) if(node.getKey().compareTo(key) < 0 && key.compareTo(right.getKey()) < 0) return getNode(right,key);
+        if(left != null) if(node.getKey().compareTo(key) > 0 && key.compareTo(left.getKey()) > 0) return getNode(left,key);
+        return null;
+    }
 
+    INode getInOrderSuccessor(INode node) {
+        if (node.getRightChild() != null) {
+            INode successor = minValue(node.getRightChild());
+            if(successor != null) successor.getParent().setLeftChild(null);
+            return successor;
+        }
+    }
+
+    INode minValue(INode node) {
+        INode current = node;
+        while (current.getLeftChild() != null) current = current.getLeftChild();
+        return current;
+    }
+
+    INode bstDelete(INode root, Comparable key) {
+        INode node = getNode(root, key);
+        if (node == null) return null;
+        if (node.getRightChild() == null && node.getRightChild() == null) {
+            if(node.getParent())
+            node = null;
+        }
+        else if (node.getRightChild() != null && node.getLeftChild() != null) {
+            INode inorderSuccessor = getInOrderSuccessor(node);
+            changeParent(node.getParent(), inorderSuccessor, node);
+            node.setKey(inorderSuccessor.getKey());
+            node.setValue(inorderSuccessor.getValue());
+        } else {
+            INode left = node.getLeftChild();
+            INode right = node.getRightChild();
+            if (left != null) {
+                changeParent(node.getParent(), left, node);
+                node = left;
+            }
+            if (right != null) {
+                changeParent(node.getParent(), right, node);
+                node = right;
+            }
+        }
+        return node;
     }
     
     @Override
     public boolean delete(Comparable key) {
-        boolean deleteComplete = bstDelete(getRoot(),key);
+        INode node = bstDelete(getRoot(),key);
         if(deleteComplete) {
             fix_up_delete();
             return true;
