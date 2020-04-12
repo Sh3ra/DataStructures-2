@@ -1,7 +1,9 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
+import javafx.util.Pair;
+
 public class RedBlackTree implements IRedBlackTree {
-    INode root=null;
+    INode root;
     @Override
     public INode getRoot() { return root; }
 
@@ -16,40 +18,56 @@ public class RedBlackTree implements IRedBlackTree {
     @Override
     public Object search(Comparable key) {
         if(isEmpty())return null;
-        return getNodeWithKey(key).getValue();
+        return getNodeWithKey(key).getKey().getValue();
     }
 
-    INode getNodeWithKey(Comparable key){
+    Pair<INode,INode> getNodeWithKey(Comparable key){
         INode curr=getRoot();
-        while (!curr.isNull()&&curr.getKey()!=key)
+        if(curr==null)return new Pair<>(null,null);
+        INode prev=curr;
+        while (curr!=null&&!curr.isNull()&&curr.getKey()!=key)
         {
+            prev=curr;
             if(key.compareTo(curr.getKey())>0)
             {
                 curr=curr.getRightChild();
             }
-            else
+            else{
                 curr=curr.getLeftChild();
+            }
         }
-        return curr;
+        return new Pair<INode,INode>(curr,prev);
     }
 
     @Override
     public boolean contains(Comparable key) { return search(key)!=null; }
 
+    public static void main(String[] args) {
+        RedBlackTree redBlackTree=new RedBlackTree();
+        redBlackTree.insert(409,1);
+        redBlackTree.insert(6287,1);
+        redBlackTree.insert(8166,1);
+    }
     @Override
     public void insert(Comparable key, Object value) {
-        INode newNode=getNodeWithKey(key);
-        if(!newNode.isNull())
+        Pair<INode,INode> temp=getNodeWithKey(key);
+        INode newNode=temp.getKey();
+        INode p = temp.getValue();
+        if(newNode!=null&&!newNode.isNull())
         {
             newNode.setValue(value);
             return;
         }
+        else newNode =new Node();
         newNode.setKey(key);
         newNode.setValue(value);
         if (!isEmpty()){
-
+            if(p.getKey().compareTo(key)>0)p.setLeftChild(newNode);
+            else p.setRightChild(newNode);
+            newNode.setParent(p);
         }
         rebalancedInsert(newNode);
+        //if(newNode.getLeftChild()==null&&newNode.getRightChild()==null)newNode.setColor(INode.BLACK);
     }
 
     private void rebalancedInsert(INode newNode) {
@@ -58,9 +76,15 @@ public class RedBlackTree implements IRedBlackTree {
             this.root=newNode;
             root.setColor(INode.BLACK);
         }
+        /*
         else {
+            if(newNode==getRoot()&&newNode.getColor()==INode.BLACK)
+            {
+                return;
+            }
             newNode.setColor(INode.RED);
             INode y=newNode.getParent();
+            //if(y==getRoot())return;
             INode z=y.getParent();
             if(y.getColor())
             {
@@ -70,15 +94,16 @@ public class RedBlackTree implements IRedBlackTree {
                     yIsLeft=true;
                 if(yIsLeft)s=z.getRightChild();
                 else s=z.getLeftChild();
-                if(s.getColor()==INode.BLACK)
+                if(s!=null&&s.getColor()==INode.BLACK)
                 {
                     y.setParent(z.getParent());
                     INode p=z.getParent();
                     z.setParent(y);
-                    if(p.getLeftChild()==z){
-                        p.setLeftChild(y);
+                    if(p!=null) {
+                        if (p.getLeftChild() == z) {
+                            p.setLeftChild(y);
+                        } else p.setRightChild(y);
                     }
-                    else p.setRightChild(y);
                     INode t;
                     if(newNode==y.getLeftChild()){
                         t=y.getRightChild();
@@ -97,12 +122,13 @@ public class RedBlackTree implements IRedBlackTree {
                 }
                 else{
                     y.setColor(INode.BLACK);
-                    s.setColor(INode.BLACK);
+                    if(s!=null)s.setColor(INode.BLACK);
                     z.setColor(INode.RED);
                     rebalancedInsert(z);
                 }
             }
         }
+        */
     }
 
     @Override
