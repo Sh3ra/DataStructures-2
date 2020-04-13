@@ -1,7 +1,9 @@
 package eg.edu.alexu.csd.filestructure.redblacktree;
 
 import javafx.util.Pair;
+import org.omg.SendingContext.RunTime;
 
+import javax.management.RuntimeErrorException;
 import java.util.*;
 
 public class TreeMap implements ITreeMap {
@@ -9,12 +11,14 @@ public class TreeMap implements ITreeMap {
 
     private Map.Entry traverse(Comparable key,boolean ceil, boolean floor){
         INode node = tree.getRoot();
+        INode v = node.getParent();
         INode value = tree.getRoot();
         while(node != null){
             if(ceil) if(node.getKey().compareTo(value.getKey()) >= 0) value = node;
             if(floor) if(node.getKey().compareTo(value.getKey()) <= 0) value = node;
             if (key.compareTo(node.getKey()) < 0) node = node.getLeftChild();
             if (key.compareTo(node.getKey()) > 0) node = node.getRightChild();
+            if(key.compareTo(node.getKey()) == 0) break;
         }
         return new AbstractMap.SimpleEntry(value.getKey(),value.getValue());
     }
@@ -106,6 +110,7 @@ public class TreeMap implements ITreeMap {
         while(key != node.getKey()) {
             if (key.compareTo(node.getKey()) < 0) node = node.getLeftChild();
             if (key.compareTo(node.getKey()) > 0) node = node.getRightChild();
+            if (key.compareTo(node.getKey()) == 0) break;
         }
         return node.getValue();
     }
@@ -177,7 +182,8 @@ public class TreeMap implements ITreeMap {
     @Override
     public Map.Entry lastEntry() {
         INode node = tree.getRoot();
-        while(node.getRightChild() != null) node = node.getRightChild();
+        if(node == null) return null;
+        while( node.getRightChild() != null) node = node.getRightChild();
         Map.Entry<Comparable, Object> entry = new AbstractMap.SimpleEntry<>(node.getKey(),node.getValue());
         return entry;
     }
