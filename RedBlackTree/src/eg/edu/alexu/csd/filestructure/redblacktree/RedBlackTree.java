@@ -20,6 +20,8 @@ public class RedBlackTree implements IRedBlackTree {
     @Override
     public Object search(Comparable key) {
         if(isEmpty())return null;
+        INode temp=getNodeWithKey(key).getKey();
+        if(temp==null)return new Node().getValue();
         return getNodeWithKey(key).getKey().getValue();
     }
 
@@ -27,7 +29,7 @@ public class RedBlackTree implements IRedBlackTree {
         INode curr=getRoot();
         if(curr==null)return new Pair<>(null,null);
         INode prev=curr;
-        while (curr!=null&&!curr.isNull()&&curr.getKey()!=key)
+        while (curr!=null&&!curr.isNull()&&curr.getKey().compareTo(key)!=0)
         {
             prev=curr;
             if(key.compareTo(curr.getKey())>0)
@@ -46,9 +48,12 @@ public class RedBlackTree implements IRedBlackTree {
 
     public static void main(String[] args) {
         RedBlackTree redBlackTree=new RedBlackTree();
-        redBlackTree.insert(409,1);
-        redBlackTree.insert(6287,1);
-        redBlackTree.insert(8166,1);
+        redBlackTree.insert(311,1);
+        redBlackTree.insert(6887,1);
+        redBlackTree.insert(7095,1);
+        redBlackTree.insert(4023,1);
+        redBlackTree.insert(2482,1);
+        redBlackTree=null;
     }
     @Override
     public void insert(Comparable key, Object value) {
@@ -78,59 +83,55 @@ public class RedBlackTree implements IRedBlackTree {
             this.root=newNode;
             root.setColor(INode.BLACK);
         }
-        /*
         else {
-            if(newNode==getRoot()&&newNode.getColor()==INode.BLACK)
-            {
-                return;
-            }
             newNode.setColor(INode.RED);
-            INode y=newNode.getParent();
-            //if(y==getRoot())return;
-            INode z=y.getParent();
-            if(y.getColor())
+            while (newNode.getParent()!=null&&newNode.getParent().getColor()==INode.RED&&newNode.getColor()==INode.RED)
             {
                 INode s;
-                boolean yIsLeft=false;
-                if(y==z.getLeftChild())
-                    yIsLeft=true;
-                if(yIsLeft)s=z.getRightChild();
-                else s=z.getLeftChild();
-                if(s!=null&&s.getColor()==INode.BLACK)
+                if(newNode.getParent().getParent().getRightChild()==newNode.getParent())
                 {
-                    y.setParent(z.getParent());
-                    INode p=z.getParent();
-                    z.setParent(y);
-                    if(p!=null) {
-                        if (p.getLeftChild() == z) {
-                            p.setLeftChild(y);
-                        } else p.setRightChild(y);
-                    }
-                    INode t;
-                    if(newNode==y.getLeftChild()){
-                        t=y.getRightChild();
-                        t.setParent(z);
-                        y.setRightChild(z);
+                    s=newNode.getParent().getParent().getLeftChild();
+                }
+                else s=newNode.getParent().getParent().getRightChild();
+                if(s!=null&&s.getColor()==INode.RED)
+                {
+                    s.setColor(INode.BLACK);
+                    newNode.getParent().setColor(INode.BLACK);
+                    newNode.getParent().getParent().setColor(INode.RED);
+                    newNode=newNode.getParent().getParent();
+                }
+                else if((s == null || s.getColor() == INode.BLACK)&&newNode.getParent().getRightChild()==newNode)
+                {
+                    if(newNode.getParent().getParent().getRightChild()==newNode.getParent())
+                    {
+                        newNode=newNode.getParent();
+                        rotateLeft(newNode.getParent());
+                        newNode.getLeftChild().setColor(INode.RED);
+                        newNode.setColor(INode.BLACK);
                     }
                     else {
-                        t=y.getLeftChild();
-                        t.setParent(z);
-                        y.setLeftChild(z);
+                        newNode=newNode.getParent();
+                        rotateLeft(newNode);
+                        //newNode.getLeftChild().setColor(INode.RED);
+                        //newNode.setColor(INode.BLACK);
                     }
-                    if(yIsLeft)z.setLeftChild(t);
-                    else z.setRightChild(t);
-                    y.setColor(INode.BLACK);
-                    z.setColor(INode.RED);
                 }
-                else{
-                    y.setColor(INode.BLACK);
-                    if(s!=null)s.setColor(INode.BLACK);
-                    z.setColor(INode.RED);
-                    rebalancedInsert(z);
+                else if((s == null || s.getColor() == INode.BLACK)&&newNode==newNode.getParent().getLeftChild())
+                {
+                    if(newNode.getParent().getParent().getRightChild()==newNode.getParent())
+                    {
+                        newNode=newNode.getParent();
+                        rotateRight(newNode);
+                    }
+                    else {
+                        newNode.getParent().setColor(INode.BLACK);
+                        newNode.getParent().getParent().setColor(INode.RED);
+                        rotateRight(newNode.getParent().getParent());
+                    }
                 }
             }
+            getRoot().setColor(INode.BLACK);
         }
-        */
     }
 
 
