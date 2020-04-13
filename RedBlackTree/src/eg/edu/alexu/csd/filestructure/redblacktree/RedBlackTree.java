@@ -21,7 +21,7 @@ public class RedBlackTree implements IRedBlackTree {
     public Object search(Comparable key) {
         if(isEmpty())return null;
         INode temp=getNodeWithKey(key).getKey();
-        if(temp==null)return null;
+        if(temp==null)return new Node().getValue();
         return getNodeWithKey(key).getKey().getValue();
     }
 
@@ -29,7 +29,7 @@ public class RedBlackTree implements IRedBlackTree {
         INode curr=getRoot();
         if(curr==null)return new Pair<>(null,null);
         INode prev=curr;
-        while (curr!=null&&!curr.isNull()&&curr.getKey()!=key)
+        while (curr!=null&&!curr.isNull()&&curr.getKey().compareTo(key)!=0)
         {
             prev=curr;
             if(key.compareTo(curr.getKey())>0)
