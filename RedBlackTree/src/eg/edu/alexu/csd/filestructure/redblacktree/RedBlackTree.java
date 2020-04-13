@@ -20,9 +20,9 @@ public class RedBlackTree implements IRedBlackTree {
     @Override
     public Object search(Comparable key) {
         if(isEmpty())return null;
-        INode temp=getNodeWithKey(key).getKey();
-        if(temp==null)return new Node().getValue();
-        return getNodeWithKey(key).getKey().getValue();
+        Pair<INode,INode> temp=getNodeWithKey(key);
+        if(temp.getKey()==null)return null;
+        return temp.getKey().getValue();
     }
 
     Pair<INode,INode> getNodeWithKey(Comparable key){
@@ -73,6 +73,8 @@ public class RedBlackTree implements IRedBlackTree {
             else p.setRightChild(newNode);
             newNode.setParent(p);
         }
+        newNode.setRightChild(new Node());
+        newNode.setLeftChild(new Node());
         rebalancedInsert(newNode);
         //if(newNode.getLeftChild()==null&&newNode.getRightChild()==null)newNode.setColor(INode.BLACK);
     }
