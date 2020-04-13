@@ -13,7 +13,7 @@ public class RedBlackTree implements IRedBlackTree {
     public INode getRoot() { return root; }
 
     @Override
-    public boolean isEmpty() { return root==null; }
+    public boolean isEmpty() { return (root==null||root.isNull()); }
 
     @Override
     public void clear() {
@@ -31,7 +31,7 @@ public class RedBlackTree implements IRedBlackTree {
 
     Pair<INode,INode> getNodeWithKey(Comparable key){
         INode curr=getRoot();
-        if(curr==null)return new Pair<>(null,null);
+        if(curr==null||curr.isNull())return new Pair<>(null,null);
         if(key==null)throw new RuntimeErrorException(new Error());
         INode prev=curr;
         while (curr!=null&&!curr.isNull()&&curr.getKey().compareTo(key)!=0)
