@@ -52,6 +52,7 @@ public class RedBlackTree implements IRedBlackTree {
 
     @Override
     public void insert(Comparable key, Object value) {
+        if(value==null)throw new RuntimeErrorException(new Error());
         Pair<INode,INode> temp=getNodeWithKey(key);
         INode newNode=temp.getKey();
         INode p = temp.getValue();
