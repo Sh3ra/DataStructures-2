@@ -4,6 +4,8 @@ import com.sun.corba.se.impl.resolver.INSURLOperationImpl;
 import com.sun.org.apache.regexp.internal.RE;
 import javafx.util.Pair;
 
+import javax.management.RuntimeErrorException;
+
 public class RedBlackTree implements IRedBlackTree {
     INode root;
     @Override
@@ -28,6 +30,7 @@ public class RedBlackTree implements IRedBlackTree {
     Pair<INode,INode> getNodeWithKey(Comparable key){
         INode curr=getRoot();
         if(curr==null)return new Pair<>(null,null);
+        if(key==null)throw new RuntimeErrorException(new Error());
         INode prev=curr;
         while (curr!=null&&!curr.isNull()&&curr.getKey().compareTo(key)!=0)
         {
@@ -68,7 +71,6 @@ public class RedBlackTree implements IRedBlackTree {
         newNode.setRightChild(new Node());
         newNode.setLeftChild(new Node());
         rebalancedInsert(newNode);
-        //if(newNode.getLeftChild()==null&&newNode.getRightChild()==null)newNode.setColor(INode.BLACK);
     }
 
     private void rebalancedInsert(INode newNode) {
@@ -94,33 +96,31 @@ public class RedBlackTree implements IRedBlackTree {
                     newNode.getParent().getParent().setColor(INode.RED);
                     newNode=newNode.getParent().getParent();
                 }
-                else if((s.getValue() == null || s.getColor() == INode.BLACK)&&newNode.getParent().getRightChild()==newNode)
+                else if((s == null || s.getColor() == INode.BLACK)&&newNode.getParent().getRightChild()==newNode)
                 {
                     if(newNode.getParent().getParent().getRightChild()==newNode.getParent())
                     {
                         newNode=newNode.getParent();
-                        rotateLeft(newNode.getParent());
+                        rotateILeft(newNode.getParent());
                         newNode.getLeftChild().setColor(INode.RED);
                         newNode.setColor(INode.BLACK);
                     }
                     else {
                         newNode=newNode.getParent();
-                        rotateLeft(newNode);
-                        //newNode.getLeftChild().setColor(INode.RED);
-                        //newNode.setColor(INode.BLACK);
+                        rotateILeft(newNode);
                     }
                 }
-                else if((s.getValue() == null || s.getColor() == INode.BLACK)&&newNode==newNode.getParent().getLeftChild())
+                else if((s== null || s.getColor() == INode.BLACK)&&newNode==newNode.getParent().getLeftChild())
                 {
                     if(newNode.getParent().getParent().getRightChild()==newNode.getParent())
                     {
                         newNode=newNode.getParent();
-                        rotateRight(newNode);
+                        rotateIRight(newNode);
                     }
                     else {
                         newNode.getParent().setColor(INode.BLACK);
                         newNode.getParent().getParent().setColor(INode.RED);
-                        rotateRight(newNode.getParent().getParent());
+                        rotateIRight(newNode.getParent().getParent());
                     }
                 }
             }
@@ -133,7 +133,19 @@ public class RedBlackTree implements IRedBlackTree {
         if (parent.getRightChild() == node) return true;
         return false;
     }
-
+    private void changeIParent(INode parent,INode child, INode node){
+        if(parent == null){
+            root  = child;
+            child.setParent(null);
+        }
+        else if(getRightOrLeft(parent, node)) {
+            parent.setRightChild(child);
+            if(child != null) child.setParent(parent);
+        } else {
+            parent.setLeftChild(child);
+            if(child != null) child.setParent(parent);
+        }
+    }
     private void changeParent(INode parent, INode child, INode  node){
         if(parent.getValue() == null){
             root  = child;
@@ -147,6 +159,16 @@ public class RedBlackTree implements IRedBlackTree {
             child.setParent(parent);
         }
     }
+    private void rotateILeft(INode node){
+        INode child = node.getRightChild();
+        INode parent = node.getParent();
+        INode rlChild = node.getRightChild().getLeftChild();
+        changeIParent(parent,child,node);
+        child.setLeftChild(node);
+        node.setParent(child);
+        node.setRightChild(rlChild);
+        if(rlChild != null) rlChild.setParent(node);
+    }
 
     private void rotateLeft(INode node) {
         INode child = node.getRightChild();
@@ -158,7 +180,16 @@ public class RedBlackTree implements IRedBlackTree {
         node.setRightChild(rlChild);
         rlChild.setParent(node);
     }
-
+    private void rotateIRight(INode node){
+        INode child = node.getLeftChild();
+        INode parent = node.getParent();
+        INode lrChild = node.getLeftChild().getRightChild();
+        changeIParent(parent,child,node);
+        child.setRightChild(node);
+        node.setParent(child);
+        node.setLeftChild(lrChild);
+        if(lrChild!= null) lrChild.setParent(node);
+    }
     private void rotateRight(INode node) {
         INode child = node.getLeftChild();
         INode parent = node.getParent();
