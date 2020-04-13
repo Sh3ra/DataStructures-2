@@ -524,13 +524,19 @@ public class UnitTest {
 		try {
 			Random r = new Random();
 			HashSet<Integer> list = new HashSet<>();
-			for (int i = 0; i < 100000; i++) {
+			/*for (int i = 0; i < 5; i++) {
 				int key = r.nextInt(10000);
 				if (r.nextInt(5) % 4 == 0)
 					list.add(key);
 				redBlackTree.insert(key, "soso" + key);
-			}
-			
+			}*/
+			list.add(1523);
+			redBlackTree.insert(1523, "soso" + 1523);
+			redBlackTree.insert(1000, "soso" + 1000);
+			list.add(10000);
+			redBlackTree.insert(10000, "soso" + 10000);
+			redBlackTree.insert(10005, "soso" + 10005);
+			redBlackTree.insert(100, "soso" + 100);
 			for (Integer elem : list) 
 				Assert.assertTrue(redBlackTree.delete(elem));
 			INode<Integer, String> node = redBlackTree.getRoot();

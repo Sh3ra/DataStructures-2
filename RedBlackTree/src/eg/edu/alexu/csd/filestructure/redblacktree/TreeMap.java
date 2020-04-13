@@ -2,6 +2,7 @@ package eg.edu.alexu.csd.filestructure.redblacktree;
 
 import javafx.util.Pair;
 import org.omg.SendingContext.RunTime;
+import sun.awt.image.ImageWatched;
 
 import javax.management.RuntimeErrorException;
 import java.util.*;
@@ -10,19 +11,23 @@ public class TreeMap implements ITreeMap {
     IRedBlackTree tree = new RedBlackTree();
 
     private Map.Entry traverse(Comparable key,boolean ceil, boolean floor){
+        if(key==null)throw new RuntimeErrorException(new Error());
         INode node = tree.getRoot();
         INode value = tree.getRoot();
         while(node.getValue() != null){
-            if(ceil) if(node.getKey().compareTo(value.getKey()) >= 0) value = node;
-            if(floor) if(node.getKey().compareTo(value.getKey()) <= 0) value = node;
+            if(ceil) if(key.compareTo(node.getKey()) <= 0) value = node;
+            if(floor) if(key.compareTo(node.getKey()) >= 0) value = node;
             if (key.compareTo(node.getKey()) < 0) node = node.getLeftChild();
             if (key.compareTo(node.getKey()) > 0) node = node.getRightChild();
             if(key.compareTo(node.getKey()) == 0) break;
         }
+        if(ceil) if(key.compareTo(node.getKey()) <= 0) value = node;
+        if(floor) if(key.compareTo(node.getKey()) >= 0) value = node;
         return new AbstractMap.SimpleEntry(value.getKey(),value.getValue());
     }
     @Override
     public Map.Entry ceilingEntry(Comparable key) {
+        if(key==null)throw new RuntimeErrorException(new Error());
         Map.Entry<Comparable, Object> entry = traverse(key, true, false);
         if(entry.getKey().compareTo(key) < 0) return null;
         return entry;
@@ -47,12 +52,13 @@ public class TreeMap implements ITreeMap {
 
     @Override
     public boolean containsValue(Object value) {
+        if(value == null) throw new RuntimeErrorException(new Error());
         Queue <INode> q = new LinkedList<>();
         q.add(tree.getRoot());
         while(q.size()>0){
             INode node = q.poll();
             if(node.getValue() == null) continue;
-            if(node.getValue() == value) return true;
+            if(node.getValue().equals(value)) return true;
             q.add(node.getRightChild());
             q.add(node.getLeftChild());
         }
@@ -61,21 +67,29 @@ public class TreeMap implements ITreeMap {
 
     @Override
     public Set<Map.Entry> entrySet() {
-        Queue <INode> q = new LinkedList<>();
-        Set <Map.Entry> s = new HashSet<>();
-        q.add(tree.getRoot());
-        while(q.size()>0){
-            INode node = q.poll();
-            if(node.getValue() == null) continue;
-            s.add(new AbstractMap.SimpleEntry<>(node.getKey(),node.getValue()));
-            q.add(node.getRightChild());
-            q.add(node.getLeftChild());
+        if (tree.getRoot() == null) return null;
+        Stack<INode> s = new Stack<INode>();
+        INode node = tree.getRoot();
+        Set <Map.Entry> set = new LinkedHashSet<>();
+        while (node != null || s.size() > 0)
+        {
+            while (node !=  null)
+            {
+                s.push(node);
+                node = node.getLeftChild();
+            }
+            node = s.pop();
+            if(node.getValue() != null){
+                set.add(new AbstractMap.SimpleEntry<>(node.getKey(),node.getValue()));
+            }
+            node = node.getRightChild();
         }
-        return s;
+        return set;
     }
 
     @Override
     public Map.Entry firstEntry() {
+        if(tree.getRoot() == null) return null;
         INode node = tree.getRoot();
         while(node.getLeftChild().getValue() != null) node = node.getLeftChild();
         Map.Entry<Comparable, Object> entry = new AbstractMap.SimpleEntry<>(node.getKey(),node.getValue());
@@ -85,11 +99,13 @@ public class TreeMap implements ITreeMap {
     @Override
     public Comparable firstKey() {
         Map.Entry<Comparable, Object> entry = firstEntry();
+        if(entry == null) return null;
         return entry.getKey();
     }
 
     @Override
     public Map.Entry floorEntry(Comparable key) {
+        if(key==null)throw new RuntimeErrorException(new Error());
         Map.Entry<Comparable, Object> entry = traverse(key, false, true);
         if(entry.getKey().compareTo(key) > 0) return null;
         return entry;
@@ -104,6 +120,7 @@ public class TreeMap implements ITreeMap {
 
     @Override
     public Object get(Comparable key) {
+        if(key==null)throw new RuntimeErrorException(new Error());
         if(!tree.contains(key)) return null;
         INode node = tree.getRoot();
         while(key != node.getKey()) {
@@ -129,6 +146,7 @@ public class TreeMap implements ITreeMap {
     }
     @Override
     public ArrayList<Map.Entry> headMap(Comparable toKey) {
+        if(toKey==null)throw new RuntimeErrorException(new Error());
         ArrayList<Map.Entry> headmap = new ArrayList<>();
         Queue <INode> q = new LinkedList<>();
         q.add(tree.getRoot());
@@ -148,6 +166,7 @@ public class TreeMap implements ITreeMap {
 
     @Override
     public ArrayList<Map.Entry> headMap(Comparable toKey, boolean inclusive) {
+        if(toKey==null)throw new RuntimeErrorException(new Error());
         ArrayList<Map.Entry> headmap = new ArrayList<>();
         Queue <INode> q = new LinkedList<>();
         q.add(tree.getRoot());
@@ -163,26 +182,35 @@ public class TreeMap implements ITreeMap {
         return headmap;
     }
 
+
     @Override
     public Set keySet() {
-        Queue <INode> q = new LinkedList<>();
-        Set <Comparable> s = new HashSet<>();
-        q.add(tree.getRoot());
-        while(q.size()>0){
-            INode node = q.poll();
-            if(node.getValue() == null) continue;
-            s.add(node.getKey());
-            q.add(node.getRightChild());
-            q.add(node.getLeftChild());
+        if (tree.getRoot() == null) return null;
+        Stack<INode> s = new Stack<INode>();
+        INode node = tree.getRoot();
+        Set <Comparable> set = new LinkedHashSet<>();
+        while (node != null || s.size() > 0)
+        {
+            while (node !=  null)
+            {
+                s.push(node);
+                node = node.getLeftChild();
+            }
+            node = s.pop();
+            if(node.getValue() != null){
+                set.add(node.getKey());
+            }
+            node = node.getRightChild();
         }
-        return s;
+        return set;
     }
 
     @Override
     public Map.Entry lastEntry() {
+        if(tree.getRoot() == null) return null;
         INode node = tree.getRoot();
         if(node == null) return null;
-        while( node.getRightChild() != null) node = node.getRightChild();
+        while( node.getRightChild().getValue() != null) node = node.getRightChild();
         Map.Entry<Comparable, Object> entry = new AbstractMap.SimpleEntry<>(node.getKey(),node.getValue());
         return entry;
     }
@@ -190,12 +218,14 @@ public class TreeMap implements ITreeMap {
     @Override
     public Comparable lastKey() {
         Map.Entry<Comparable, Object> entry = lastEntry();
+        if(entry == null) return null;
         return entry.getKey();
     }
 
     @Override
     public Map.Entry pollFirstEntry() {
         Map.Entry<Comparable,Object> entry = firstEntry();
+        if(entry != null)
         tree.delete(entry.getKey());
         return  entry;
     }
@@ -203,17 +233,20 @@ public class TreeMap implements ITreeMap {
     @Override
     public Map.Entry pollLastEntry() {
         Map.Entry<Comparable,Object> entry = lastEntry();
+        if(entry != null)
         tree.delete(entry.getKey());
         return  entry;
     }
 
     @Override
     public void put(Comparable key, Object value) {
+        if(value==null || key == null)throw new RuntimeErrorException(new Error());
         tree.insert(key,value);
     }
 
     @Override
     public void putAll(Map map) {
+        if(map==null)throw new RuntimeErrorException(new Error());
         Iterator it = map.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry entry = (Map.Entry) it.next();
@@ -233,7 +266,7 @@ public class TreeMap implements ITreeMap {
         q.add(tree.getRoot());
         while(q.size()>0){
             INode node = q.poll();
-            if(node.getValue() == null) continue;
+            if(node == null || node.getValue() == null) continue;
             size++;
             q.add(node.getRightChild());
             q.add(node.getLeftChild());

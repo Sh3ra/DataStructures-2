@@ -5,9 +5,10 @@ import com.sun.org.apache.regexp.internal.RE;
 import javafx.util.Pair;
 
 import javax.management.RuntimeErrorException;
+import javax.swing.*;
 
 public class RedBlackTree implements IRedBlackTree {
-    INode root;
+    INode root = null;
     @Override
     public INode getRoot() { return root; }
 
@@ -21,6 +22,7 @@ public class RedBlackTree implements IRedBlackTree {
 
     @Override
     public Object search(Comparable key) {
+        if(key == null) throw new RuntimeErrorException(new Error());
         if(isEmpty())return null;
         Pair<INode,INode> temp=getNodeWithKey(key);
         if(temp.getKey()==null)return null;
@@ -47,7 +49,9 @@ public class RedBlackTree implements IRedBlackTree {
     }
 
     @Override
-    public boolean contains(Comparable key) { return search(key)!=null; }
+    public boolean contains(Comparable key) {
+        return search(key)!=null;
+    }
 
 
     @Override
@@ -148,7 +152,7 @@ public class RedBlackTree implements IRedBlackTree {
         }
     }
     private void changeParent(INode parent, INode child, INode  node){
-        if(parent.getValue() == null){
+        if(parent == null || parent.getValue() == null){
             root  = child;
             child.setParent(null);
         }
@@ -226,11 +230,14 @@ public class RedBlackTree implements IRedBlackTree {
         return current;
     }
 
-    private INode bstDelete(INode node, Comparable key) {
+    private INode bstDelete(INode node) {
         if (node.getValue() == null) return new Node();
         if (node.getRightChild().getValue() == null && node.getLeftChild().getValue() == null) {
-            if(node.getParent() != null) changeParent(node.getParent(),new Node(), node);
-            node = new Node();
+            if(node.getParent() != null) {
+                changeParent(node.getParent(),new Node(), node);
+            }
+            node.setValue(null);
+            node.setKey(null);
         }
         else if (node.getRightChild().getValue() != null && node.getLeftChild().getValue() != null) {
             INode inorderSuccessor = getInOrderSuccessor(node);
@@ -321,9 +328,12 @@ public class RedBlackTree implements IRedBlackTree {
 
     @Override
     public boolean delete(Comparable key) {
+        if(!contains(key)) return false;
+        if(key==null)throw new RuntimeErrorException(new Error());
         INode node = getNode(root, key);
         if(node.getValue() == null) return false;
-        INode newNode = bstDelete(node,key);
+        INode newNode = bstDelete(node);
+        if(newNode == null) return true;
         if( newNode.getValue() != null && (node.getColor() == INode.RED || newNode.getColor() == INode.RED)) newNode.setColor(INode.BLACK);
         else fix_up_delete(newNode,node.getParent());
         return true;
