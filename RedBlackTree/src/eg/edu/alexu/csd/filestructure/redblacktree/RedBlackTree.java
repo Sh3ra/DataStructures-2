@@ -166,7 +166,7 @@ public class RedBlackTree implements IRedBlackTree {
 
     private void rotateRight(INode node) {
         INode child = node.getLeftChild();
-        INode parent = node.getLeftChild();
+        INode parent = node.getParent();
         INode lrChild = node.getLeftChild().getRightChild();
         changeParent(parent,child,node);
         child.setRightChild(node);
