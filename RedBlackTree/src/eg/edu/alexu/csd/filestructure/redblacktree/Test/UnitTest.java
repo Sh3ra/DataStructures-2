@@ -31,7 +31,7 @@ import org.junit.Test;
 public class UnitTest {
 	private final boolean debug = false;
 
-	/** 
+	/**
 	 * test get a null root.
 	 */
 	@Test
@@ -45,7 +45,7 @@ public class UnitTest {
 			if (debug)
 				System.out.println("TestRootNull: (case null)");
 			boolean check = false;
-			if (root == null) 
+			if (root == null)
 				check = true;
 			if (!check)
 				Assert.assertEquals(true, root.isNull());
@@ -89,7 +89,7 @@ public class UnitTest {
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to test if tree is Empty", e);
 		}
-	}	
+	}
 
 	/**
 	 * check isEmpty false case.
@@ -106,7 +106,7 @@ public class UnitTest {
 			TestRunner.fail("Fail to test if tree is Empty", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test clearing the tree.
 	 */
@@ -144,13 +144,13 @@ public class UnitTest {
 			ArrayList<Integer> keysToSearch = new ArrayList<>();
 			for(int i = 0; i < 1000; i++) {
 				int key = r.nextInt(10000);
-				if (i % 50 == 0) 
+				if (i % 50 == 0)
 					keysToSearch.add(key);
 				redBlackTree.insert(key, "toto" + key);
 			}
 			for (int i = 0; i < keysToSearch.size(); i++) {
 				String ans = redBlackTree.search(keysToSearch.get(i));
-				Assert.assertEquals("toto" + keysToSearch.get(i), ans);				
+				Assert.assertEquals("toto" + keysToSearch.get(i), ans);
 			}
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to search for a key in the tree", e);
@@ -164,14 +164,14 @@ public class UnitTest {
 	public void testSearchEmpty() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Assert.assertNull(redBlackTree.search(123));
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to search for a key in the tree", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test search an absent key in a tree.
 	 */
@@ -179,7 +179,7 @@ public class UnitTest {
 	public void testSearchAbsentKey() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			for (int i = 0; i < 10000; i++)
 				redBlackTree.insert(i, "koko" + i);
@@ -196,25 +196,25 @@ public class UnitTest {
 	public void testStressSearch() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			ArrayList<Integer> keysToSearch = new ArrayList<>();
 			for(int i = 0; i < 10000000; i++) {
 				int key = r.nextInt(100000);
-				if (i % 50 == 0) 
+				if (i % 50 == 0)
 					keysToSearch.add(key);
 				redBlackTree.insert(key, "toto" + key);
 			}
 			for (int i = 0; i < keysToSearch.size(); i++) {
 				String ans = redBlackTree.search(keysToSearch.get(i));
-				Assert.assertEquals("toto" + keysToSearch.get(i), ans);				
+				Assert.assertEquals("toto" + keysToSearch.get(i), ans);
 			}
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to search for a key in the tree", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test search with null.
 	 */
@@ -222,7 +222,7 @@ public class UnitTest {
 	public void testSearchWithNull() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			for(int i = 0; i < 100; i++) {
@@ -232,12 +232,12 @@ public class UnitTest {
 			redBlackTree.search(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to handle search with null parameter", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test normal contains in a tree.
 	 */
@@ -251,13 +251,13 @@ public class UnitTest {
 			ArrayList<Integer> keysToSearch = new ArrayList<>();
 			for(int i = 0; i < 1000; i++) {
 				int key = r.nextInt(10000);
-				if (i % 50 == 0) 
+				if (i % 50 == 0)
 					keysToSearch.add(key);
 				redBlackTree.insert(key, "toto" + key);
 			}
 			for (int i = 0; i < keysToSearch.size(); i++) {
 				boolean ans = redBlackTree.contains(keysToSearch.get(i));
-				Assert.assertEquals(true, ans);				
+				Assert.assertEquals(true, ans);
 			}
 		}catch (Throwable e) {
 			TestRunner.fail("Fail contains a key in the tree", e);
@@ -271,7 +271,7 @@ public class UnitTest {
 	public void testContainsWithNull() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			for(int i = 0; i < 100; i++) {
@@ -281,12 +281,12 @@ public class UnitTest {
 			redBlackTree.contains(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to handle contains with null parameter", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test contains in an empty tree.
 	 */
@@ -294,14 +294,14 @@ public class UnitTest {
 	public void testContainsEmpty() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Assert.assertEquals(false, redBlackTree.contains(123));
 		}catch (Throwable e) {
 			TestRunner.fail("Fail contains a key in the tree", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test contains an absent key in a tree.
 	 */
@@ -309,7 +309,7 @@ public class UnitTest {
 	public void testContainsAbsentKey() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			for (int i = 0; i < 10000; i++)
 				redBlackTree.insert(i, "koko" + i);
@@ -326,13 +326,13 @@ public class UnitTest {
 	public void testStressContains() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			ArrayList<Integer> keysToSearch = new ArrayList<>();
 			for(int i = 0; i < 10000000; i++) {
 				int key = r.nextInt(100000);
-				if (i % 50 == 0) 
+				if (i % 50 == 0)
 					keysToSearch.add(key);
 				redBlackTree.insert(key, "toto" + key);
 			}
@@ -343,7 +343,7 @@ public class UnitTest {
 		}catch (Throwable e) {
 			TestRunner.fail("Fail contains a key in the tree", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test insert with null key.
@@ -352,7 +352,7 @@ public class UnitTest {
 	public void testInsertionWithNullKey() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			for(int i = 0; i < 100; i++) {
@@ -362,7 +362,7 @@ public class UnitTest {
 			redBlackTree.insert(null, "soso");
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to handle search with null parameter", e);
 		}
@@ -375,7 +375,7 @@ public class UnitTest {
 	public void testInsertionWithNullValue() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			for(int i = 0; i < 100; i++) {
@@ -385,12 +385,12 @@ public class UnitTest {
 			redBlackTree.insert(123, null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to handle search with null parameter", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test insert normal with random data.
 	 */
@@ -398,7 +398,7 @@ public class UnitTest {
 	public void testNormalInsertionWithRandomData() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			for(int i = 0; i < 100; i++) {
@@ -406,12 +406,12 @@ public class UnitTest {
 				redBlackTree.insert(key, "toto" + key);
 				Assert.assertTrue(verifyProps(redBlackTree.getRoot()));
 			}
-				
+
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to insert a key in the tree", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test insert normal.
 	 */
@@ -419,7 +419,7 @@ public class UnitTest {
 	public void testNormalInsertion() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			redBlackTree.insert(20, "soso");
 			redBlackTree.insert(15, "soso");
@@ -431,15 +431,15 @@ public class UnitTest {
 			redBlackTree.insert(22, "soso");
 			redBlackTree.insert(13, "soso");
 			redBlackTree.insert(11, "soso");
-			
+
 			String expectedAns = "12B9R15R7B10B13B22BNBNBNB11RNBNB20R24RNBNBNBNBNBNB";
 			String actualAns = levelOrder(redBlackTree.getRoot());
 			Assert.assertEquals(expectedAns, actualAns);
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to insert a key in the tree", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test update normal.
 	 */
@@ -447,7 +447,7 @@ public class UnitTest {
 	public void testUpdateValue() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			redBlackTree.insert(20, "soso" + 20);
 			redBlackTree.insert(15, "soso" + 15);
@@ -459,14 +459,14 @@ public class UnitTest {
 			redBlackTree.insert(22, "soso" + 22);
 			redBlackTree.insert(13, "soso" + 13);
 			redBlackTree.insert(11, "soso" + 11);
-			
+
 			Assert.assertEquals("soso" + 13, redBlackTree.search(13));
 			redBlackTree.insert(13, "koko" + 13);
 			Assert.assertEquals("koko" + 13, redBlackTree.search(13));
 		}catch (Throwable e) {
 			TestRunner.fail("Fail to insert a key in the tree", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test delete with null parameter.
@@ -475,16 +475,16 @@ public class UnitTest {
 	public void testDeleteWithNull() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			redBlackTree.delete(null);
 			Assert.fail("Fail to handle deletion with null parameter");
 		} catch (RuntimeErrorException ex) {
-			
+
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle deletion with null parameter", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test delete all elements from tree.
@@ -493,7 +493,7 @@ public class UnitTest {
 	public void testDeleteAllElementsInTree() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			HashSet<Integer> list = new HashSet<>();
@@ -502,8 +502,8 @@ public class UnitTest {
 				list.add(key);
 				redBlackTree.insert(key, "soso" + key);
 			}
-			
-			for (Integer elem : list) 
+
+			for (Integer elem : list)
 				Assert.assertTrue(redBlackTree.delete(elem));
 			INode<Integer, String> node = redBlackTree.getRoot();
 			if (!(node == null || node.isNull()))
@@ -513,6 +513,12 @@ public class UnitTest {
 		}
 	}
 
+	public void clearScreen() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test delete random elements from tree.
 	 */
@@ -520,24 +526,20 @@ public class UnitTest {
 	public void testDeleteRandomElementsInTree() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			HashSet<Integer> list = new HashSet<>();
-			/*for (int i = 0; i < 5; i++) {
-				int key = r.nextInt(10000);
+
+			int key = 0;
+			for (int i = 0; i < 10000; i++) {
+				key = r.nextInt(10000);
 				if (r.nextInt(5) % 4 == 0)
 					list.add(key);
 				redBlackTree.insert(key, "soso" + key);
-			}*/
-			list.add(1523);
-			redBlackTree.insert(1523, "soso" + 1523);
-			redBlackTree.insert(1000, "soso" + 1000);
-			list.add(10000);
-			redBlackTree.insert(10000, "soso" + 10000);
-			redBlackTree.insert(10005, "soso" + 10005);
-			redBlackTree.insert(100, "soso" + 100);
-			for (Integer elem : list) 
+			}
+
+			for (Integer elem : list)
 				Assert.assertTrue(redBlackTree.delete(elem));
 			INode<Integer, String> node = redBlackTree.getRoot();
 			if ((node == null || node.isNull()))
@@ -555,7 +557,7 @@ public class UnitTest {
 	public void testDeleteWhileInsertingInTree() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			ArrayList<Integer> list = new ArrayList<>();
@@ -569,7 +571,7 @@ public class UnitTest {
 					list.add(key);
 				}
 			}
-			
+
 			Assert.assertTrue(verifyProps(redBlackTree.getRoot()));
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle deletion", e);
@@ -583,7 +585,7 @@ public class UnitTest {
 	public void testStressDelete() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			HashSet<Integer> list = new HashSet<>();
@@ -592,17 +594,17 @@ public class UnitTest {
 				list.add(key);
 				redBlackTree.insert(key, "soso" + key);
 			}
-			for (Integer elem : list) 
+			for (Integer elem : list)
 				redBlackTree.delete(elem);
 			INode<Integer, String> node = redBlackTree.getRoot();
 			if (!(node == null || node.isNull()))
-				Assert.fail();			
+				Assert.fail();
 			Assert.assertTrue(verifyProps(node));
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle deletion", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test delete absent elements.
 	 */
@@ -610,7 +612,7 @@ public class UnitTest {
 	public void testDeleteAbsentElementsInTree() {
 
 		IRedBlackTree<Integer, String> redBlackTree = (IRedBlackTree<Integer, String>) TestRunner.getImplementationInstanceForInterface(IRedBlackTree.class);
-		
+
 		try {
 			Random r = new Random();
 			HashSet<Integer> list = new HashSet<>();
@@ -619,18 +621,18 @@ public class UnitTest {
 				redBlackTree.insert(key, "soso" + key);
 				list.add(key);
 			}
-			
+
 			for (int i = 0; i < 100; i++) {
 				int key = r.nextInt(10000);
 				if (!list.contains(key))
 					Assert.assertFalse(redBlackTree.delete(key));
 			}
-			
+
 			Assert.assertTrue(verifyProps(redBlackTree.getRoot()));
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle deletion", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test ceiling Entry with null.
@@ -639,17 +641,17 @@ public class UnitTest {
 	public void testCeilingEntryWithNull() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.ceilingEntry(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle ceiling with null parameter", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test ceiling Entry normal exact.
 	 */
@@ -657,7 +659,7 @@ public class UnitTest {
 	public void testCeilingEntry1() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -674,8 +676,8 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in ceiling entry", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test ceiling Entry normal.
 	 */
@@ -683,7 +685,7 @@ public class UnitTest {
 	public void testCeilingEntry2() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -708,7 +710,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in ceiling entry", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test ceiling key with null.
 	 */
@@ -716,17 +718,17 @@ public class UnitTest {
 	public void testCeilingKeyWithNull() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.ceilingKey(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle ceiling with null parameter", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test ceiling key normal exact.
 	 */
@@ -734,7 +736,7 @@ public class UnitTest {
 	public void testCeilingKey1() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -750,8 +752,8 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in ceiling entry", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test ceiling Key normal.
 	 */
@@ -759,7 +761,7 @@ public class UnitTest {
 	public void testCeilingKey2() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -783,7 +785,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in ceiling key", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test clear elements from treemap.
 	 */
@@ -791,7 +793,7 @@ public class UnitTest {
 	public void testClearElementsInTreeMap() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -805,7 +807,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in clearing elments from treemap", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test contains key with null parameter.
@@ -814,12 +816,12 @@ public class UnitTest {
 	public void testContaninKeyWithNullparameter() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.containsKey(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		}
 		catch (Throwable e) {
 			TestRunner.fail("Fail in handle containsKey with null parameter", e);
@@ -833,7 +835,7 @@ public class UnitTest {
 	public void testContaninKeyNormal() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -849,7 +851,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in containsKey", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test contains key normal.
 	 */
@@ -857,7 +859,7 @@ public class UnitTest {
 	public void testContaninKeyNotFound() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -871,7 +873,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in containsKey", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test contains value with null parameter.
 	 */
@@ -879,12 +881,12 @@ public class UnitTest {
 	public void testContanisValueWithNullparameter() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.containsValue(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		}
 		catch (Throwable e) {
 			TestRunner.fail("Fail in containsValue with null parameter", e);
@@ -898,7 +900,7 @@ public class UnitTest {
 	public void testContanisValueNormal() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -914,7 +916,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in containsValue", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test contains value not found.
 	 */
@@ -922,7 +924,7 @@ public class UnitTest {
 	public void testContanisValueNotFound() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -936,7 +938,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in containsValue", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test entrySet normal.
 	 */
@@ -944,7 +946,7 @@ public class UnitTest {
 	public void testEntrySet() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Random r = new Random();
@@ -955,17 +957,17 @@ public class UnitTest {
 			}
 			Iterator<Entry<Integer, String>> itr1 = treemap.entrySet().iterator();
 			Iterator<Entry<Integer, String>> itr2 = t.entrySet().iterator();
-			
+
 			while(itr1.hasNext() && itr2.hasNext()) {
 				Entry<Integer, String> entry1 = itr1.next();
 				Entry<Integer, String> entry2 = itr2.next();
 				Assert.assertEquals(entry1, entry2);
-				
-			}	
+
+			}
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in entrySet", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test first entry.
@@ -974,13 +976,13 @@ public class UnitTest {
 	public void testFirstEntry() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Assert.assertEquals(t.firstEntry(), treemap.firstEntry());
 			t.put(5, "soso" + 5);
 			treemap.put(5, "soso" + 5);
-			Assert.assertEquals(t.firstEntry(), treemap.firstEntry());	
+			Assert.assertEquals(t.firstEntry(), treemap.firstEntry());
 			Random r = new Random();
 			for (int i = 0; i < 1000; i++) {
 				int key = r.nextInt(100000);
@@ -991,7 +993,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in firstEntry", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test first key.
@@ -1000,13 +1002,13 @@ public class UnitTest {
 	public void testFirstKey() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
-			Assert.assertNull(treemap.firstKey());	
+			Assert.assertNull(treemap.firstKey());
 			t.put(5, "soso" + 5);
 			treemap.put(5, "soso" + 5);
-			Assert.assertEquals(t.firstKey(), treemap.firstKey());	
+			Assert.assertEquals(t.firstKey(), treemap.firstKey());
 			Random r = new Random();
 			for (int i = 0; i < 1000; i++) {
 				int key = r.nextInt(100000);
@@ -1017,8 +1019,8 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in firstKey", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test floor Entry with null.
 	 */
@@ -1026,17 +1028,17 @@ public class UnitTest {
 	public void testfloorEntryWithNull() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.floorEntry(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle floorEntry with null parameter", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test floor Entry normal exact.
 	 */
@@ -1044,7 +1046,7 @@ public class UnitTest {
 	public void testfloorEntry1() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -1061,8 +1063,8 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in floorEntry", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test floor Entry normal.
 	 */
@@ -1070,7 +1072,7 @@ public class UnitTest {
 	public void testfloorEntry2() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -1094,7 +1096,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in floor entry", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test floor key with null.
 	 */
@@ -1102,17 +1104,17 @@ public class UnitTest {
 	public void testfloorKeyWithNull() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.floorKey(null);
 			Assert.fail();
 		} catch (RuntimeErrorException ex) {
-			
+
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle floorKey with null parameter", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test floor key normal exact.
 	 */
@@ -1120,7 +1122,7 @@ public class UnitTest {
 	public void testfloorKey1() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -1132,12 +1134,12 @@ public class UnitTest {
 			Collections.shuffle(list);
 			int key = list.get(r.nextInt(list.size()));
 			Integer entry = treemap.floorKey(key);
-			Assert.assertEquals(key, entry.intValue());	
+			Assert.assertEquals(key, entry.intValue());
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in floorKey", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test floor key normal.
 	 */
@@ -1145,7 +1147,7 @@ public class UnitTest {
 	public void testfloorKey2() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			List<Integer> list = new ArrayList<>();
 			Random r = new Random();
@@ -1168,7 +1170,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in floor key", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test get in treemap.
 	 */
@@ -1176,7 +1178,7 @@ public class UnitTest {
 	public void testGetElementInTreemap() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Random r = new Random();
@@ -1195,7 +1197,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in get element from treemap", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test get in treemap with null parameter.
 	 */
@@ -1203,16 +1205,16 @@ public class UnitTest {
 	public void testGetElementInTreemapWithNullParamerter() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.get(null);
 			Assert.fail();
-		} catch (RuntimeErrorException ex){ 
+		} catch (RuntimeErrorException ex){
 		} catch (Throwable e) {
 			TestRunner.fail("Fail to handle get with null parameter", e);
 		}
 	}
-	
+
 	private String levelOrder(INode<Integer, String> root) {
 		StringBuilder sb = new StringBuilder();
 		Queue<INode<Integer, String>> q = new LinkedList<>();
@@ -1241,7 +1243,7 @@ public class UnitTest {
 	public void testGetElementInTreemapNotFound() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			Random r = new Random();
 			for (int i = 0; i < 10000; i++) {
@@ -1254,7 +1256,7 @@ public class UnitTest {
 			TestRunner.fail("Fail in get element from treemap", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test headMap with null parameter.
 	 */
@@ -1262,15 +1264,15 @@ public class UnitTest {
 	public void testHeadMapWithNullparameter() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.headMap(null);
-		} catch (RuntimeErrorException ex) {	
+		} catch (RuntimeErrorException ex) {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in handle headMap with null parameter", e);
 		}
 	}
-		
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test headMap.
 	 */
@@ -1278,7 +1280,7 @@ public class UnitTest {
 	public void testHeadMap() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Random r = new Random();
@@ -1299,13 +1301,13 @@ public class UnitTest {
 					return o1.getKey() - o2.getKey();
 				}
 			});
-			for (int i = 0; i < ans.size(); i++) 
+			for (int i = 0; i < ans.size(); i++)
 				Assert.assertEquals(ans.get(i), realAns.get(i));
 		} catch (Throwable e) {
- 			TestRunner.fail("Fail in headMap", e);
+			TestRunner.fail("Fail in headMap", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test headMap with null parameter.
 	 */
@@ -1313,15 +1315,15 @@ public class UnitTest {
 	public void testHeadMapInclusiveWithNullparameter() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.headMap(null, true);
-		} catch (RuntimeErrorException ex) {	
+		} catch (RuntimeErrorException ex) {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in handle headMap with null parameter", e);
 		}
 	}
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test headMap.
 	 */
@@ -1329,7 +1331,7 @@ public class UnitTest {
 	public void testHeadMapInclusive() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Random r = new Random();
@@ -1350,14 +1352,14 @@ public class UnitTest {
 					return o1.getKey() - o2.getKey();
 				}
 			});
-			for (int i = 0; i < ans.size(); i++) 
+			for (int i = 0; i < ans.size(); i++)
 				Assert.assertEquals(ans.get(i), realAns.get(i));
 		} catch (Throwable e) {
- 			TestRunner.fail("Fail in headMap", e);
+			TestRunner.fail("Fail in headMap", e);
 		}
 	}
-	
-	
+
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test Keyset.
 	 */
@@ -1365,7 +1367,7 @@ public class UnitTest {
 	public void testKeySet() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Random r = new Random();
@@ -1380,17 +1382,17 @@ public class UnitTest {
 			Set<Integer> ans = treemap.keySet();
 			ArrayList<Integer> realAns = new ArrayList<>(t.keySet());
 			Collections.sort(realAns);
-			
+
 			int i = 0;
 			for (Integer elem : ans) {
 				Assert.assertEquals(elem, realAns.get(i++));
 			}
-			
+
 		} catch (Throwable e) {
- 			TestRunner.fail("Fail in Keyset", e);
+			TestRunner.fail("Fail in Keyset", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test last entry.
 	 */
@@ -1398,13 +1400,13 @@ public class UnitTest {
 	public void testLastEntry() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Assert.assertEquals(t.lastEntry(), treemap.lastEntry());
 			t.put(5, "soso" + 5);
 			treemap.put(5, "soso" + 5);
-			Assert.assertEquals(t.lastEntry(), treemap.lastEntry());	
+			Assert.assertEquals(t.lastEntry(), treemap.lastEntry());
 			Random r = new Random();
 			for (int i = 0; i < 1000; i++) {
 				int key = r.nextInt(100000);
@@ -1415,7 +1417,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in lastEntry", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test first key.
@@ -1424,13 +1426,13 @@ public class UnitTest {
 	public void testLastKey() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
-			Assert.assertNull(treemap.lastKey());	
+			Assert.assertNull(treemap.lastKey());
 			t.put(5, "soso" + 5);
 			treemap.put(5, "soso" + 5);
-			Assert.assertEquals(t.lastKey(), treemap.lastKey());	
+			Assert.assertEquals(t.lastKey(), treemap.lastKey());
 			Random r = new Random();
 			for (int i = 0; i < 1000; i++) {
 				int key = r.nextInt(100000);
@@ -1441,8 +1443,8 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in lastKey", e);
 		}
-	}	
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test pollFirstEntry element.
 	 */
@@ -1450,14 +1452,14 @@ public class UnitTest {
 	public void testpollFirstEntry() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Assert.assertEquals(t.size(), treemap.size());
-			Assert.assertNull(treemap.pollFirstEntry());	
+			Assert.assertNull(treemap.pollFirstEntry());
 			t.put(5, "soso" + 5);
 			treemap.put(5, "soso" + 5);
-			Assert.assertEquals(t.pollFirstEntry(), treemap.pollFirstEntry());	
+			Assert.assertEquals(t.pollFirstEntry(), treemap.pollFirstEntry());
 			Assert.assertEquals(t.size(), treemap.size());
 			Random r = new Random();
 			for (int i = 0; i < 1000; i++) {
@@ -1471,9 +1473,9 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in pollFirstEntry", e);
 		}
-	}		
+	}
 
-	
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test pollLastEntry element.
 	 */
@@ -1481,14 +1483,14 @@ public class UnitTest {
 	public void testpollLastEntry() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Assert.assertEquals(t.size(), treemap.size());
-			Assert.assertNull(treemap.pollLastEntry());	
+			Assert.assertNull(treemap.pollLastEntry());
 			t.put(5, "soso" + 5);
 			treemap.put(5, "soso" + 5);
-			Assert.assertEquals(t.pollLastEntry(), treemap.pollLastEntry());	
+			Assert.assertEquals(t.pollLastEntry(), treemap.pollLastEntry());
 			Assert.assertEquals(t.size(), treemap.size());
 			Random r = new Random();
 			for (int i = 0; i < 1000; i++) {
@@ -1502,7 +1504,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in pollLastEntry", e);
 		}
-	}		
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test put with null key.
@@ -1511,7 +1513,7 @@ public class UnitTest {
 	public void testputWithNullKey() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.put(null, "soso");
 			Assert.fail();
@@ -1519,7 +1521,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in handle put with null parameter", e);
 		}
-	}		
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test put with null value.
@@ -1528,7 +1530,7 @@ public class UnitTest {
 	public void testputWithNullValue() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.put(123, null);
 			Assert.fail();
@@ -1536,7 +1538,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in handle put with null parameter", e);
 		}
-	}		
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test putAll with null value.
@@ -1545,7 +1547,7 @@ public class UnitTest {
 	public void testputAllWithNullValue() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.putAll(null);
 			Assert.fail();
@@ -1553,7 +1555,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in handle putAll with null parameter", e);
 		}
-	}		
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test putAll.
@@ -1562,7 +1564,7 @@ public class UnitTest {
 	public void testputAll() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			Random r = new Random();
 			HashMap<Integer, String> map = new HashMap<>();
@@ -1575,8 +1577,8 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in putAll", e);
 		}
-	}		
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test remove with null parameter.
 	 */
@@ -1584,15 +1586,15 @@ public class UnitTest {
 	public void testRemoveWithNullparameter() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			treemap.remove(null);
 		} catch (RuntimeErrorException ex) {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in remove with null parameter", e);
 		}
-	}			
-	
+	}
+
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test remove normal.
 	 */
@@ -1600,7 +1602,7 @@ public class UnitTest {
 	public void testRemoveNoraml() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			Random r = new Random();
 			List<Integer> list = new ArrayList<>();
@@ -1615,7 +1617,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in remove", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test remove not found.
@@ -1624,7 +1626,7 @@ public class UnitTest {
 	public void testRemoveNotFound() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			Random r = new Random();
 			List<Integer> list = new ArrayList<>();
@@ -1637,7 +1639,7 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in remove element", e);
 		}
-	}	
+	}
 
 	/**
 	 * eg.edu.alexu.csd.filestructure.redblacktree.Test get values.
@@ -1646,7 +1648,7 @@ public class UnitTest {
 	public void testValues() {
 
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
-		
+
 		try {
 			TreeMap<Integer, String> t = new TreeMap<>();
 			Random r = new Random();
@@ -1666,40 +1668,40 @@ public class UnitTest {
 		} catch (Throwable e) {
 			TestRunner.fail("Fail in getting values", e);
 		}
-	}	
-	
+	}
+
 	@Test
 	public void testClassContainsMapReference() {
 		ITreeMap<Integer, String> treemap = (ITreeMap<Integer, String>) TestRunner.getImplementationInstanceForInterface(ITreeMap.class);
 		Field[] fields = treemap.getClass().getDeclaredFields();
-		
+
 		Queue<Field> q = new LinkedList<>();
-		
+
 		q.addAll(Arrays.asList(fields));
-		
+
 		while(!q.isEmpty()) {
 			Field cur = q.poll();
-			
+
 			System.out.println("field name " + cur.getType());
 			if (cur.getType().isPrimitive()) continue;
-			
+
 			if (cur.getType().isAssignableFrom(TreeMap.class))
 				Assert.fail();
 			q.addAll(Arrays.asList(cur.getType().getDeclaredFields()));
 		}
-		
+
 	}
-	
+
 	private boolean validateBST(INode<Integer, String> node, INode<Integer, String> leftRange, INode<Integer, String> rightRange) {
 		if (node == null || node.isNull()) return true;
-		
+
 		if ((leftRange == null || node.getKey().compareTo(leftRange.getKey()) > 0) &&
 				(rightRange == null || node.getKey().compareTo(rightRange.getKey()) < 0))
-			return validateBST(node.getLeftChild(), leftRange, node) && 
+			return validateBST(node.getLeftChild(), leftRange, node) &&
 					validateBST(node.getRightChild(), node, rightRange);
 		return false;
 	}
-	
+
 	private boolean verifyProperty2(INode<Integer, String> node) {
 		return node.getColor() == INode.BLACK;
 	}
@@ -1718,7 +1720,7 @@ public class UnitTest {
 
 		return verifyProperty4(node.getLeftChild()) && verifyProperty4(node.getRightChild());
 	}
-	
+
 	private boolean verifyProperty5(INode<Integer, String> node) {
 		boolean[] ans = new boolean[]{true};
 		verifyProperty5Helper(node, ans);

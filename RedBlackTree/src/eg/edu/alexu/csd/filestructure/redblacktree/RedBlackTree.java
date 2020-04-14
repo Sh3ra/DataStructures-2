@@ -6,6 +6,7 @@ import javafx.util.Pair;
 
 import javax.management.RuntimeErrorException;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 
 public class RedBlackTree implements IRedBlackTree {
     INode root = null;
@@ -218,7 +219,6 @@ public class RedBlackTree implements IRedBlackTree {
     private INode getInOrderSuccessor(INode node) {
         if (node.getRightChild().getValue() != null) {
             INode successor = minValue(node.getRightChild());
-            if(successor.getValue() != null) successor.getParent().setLeftChild(null);
             return successor;
         }
         return new Node();
@@ -229,52 +229,79 @@ public class RedBlackTree implements IRedBlackTree {
         while (current.getLeftChild().getValue() != null) current = current.getLeftChild();
         return current;
     }
-
+    INode secondNode = new Node();
     private INode bstDelete(INode node) {
-        if (node.getValue() == null) return new Node();
+        boolean color = false;
+        if (node.getValue() == null) return node;
         if (node.getRightChild().getValue() == null && node.getLeftChild().getValue() == null) {
+            secondNode = node;
+            INode newNode = new Node();
             if(node.getParent() != null) {
-                changeParent(node.getParent(),new Node(), node);
+                changeParent(node.getParent(),newNode, node);
+            } else {
+                root = newNode;
             }
-            node.setValue(null);
-            node.setKey(null);
+            return newNode;
         }
         else if (node.getRightChild().getValue() != null && node.getLeftChild().getValue() != null) {
             INode inorderSuccessor = getInOrderSuccessor(node);
-            changeParent(node.getParent(), inorderSuccessor, node);
-            if(inorderSuccessor != node.getLeftChild())
-            inorderSuccessor.setLeftChild(node.getLeftChild());
-            if(inorderSuccessor != node.getRightChild())
-            inorderSuccessor.setRightChild(node.getRightChild());
-            node = inorderSuccessor;
+            INode newNode = new Node();
+            node.setValue(inorderSuccessor.getValue());
+            node.setKey(inorderSuccessor.getKey());
+            secondNode = inorderSuccessor;
+            if(inorderSuccessor.getRightChild().getValue() == null && inorderSuccessor.getLeftChild().getValue() == null) {
+                changeParent(inorderSuccessor.getParent(),newNode,inorderSuccessor);
+                return newNode;
+            } else {
+                changeParent(inorderSuccessor.getParent(),inorderSuccessor.getRightChild(),inorderSuccessor);
+                return inorderSuccessor.getRightChild();
+            }
         } else {
             INode left = node.getLeftChild();
             INode right = node.getRightChild();
+            secondNode = node;
             if (left.getValue() != null) {
                 changeParent(node.getParent(), left, node);
-                node = left;
+                return left;
             }
             if (right.getValue() != null) {
                 changeParent(node.getParent(), right, node);
-                node = right;
+                return right;
             }
         }
         return node;
     }
 
-    private void handleCase(INode p, INode s, boolean right, boolean diffPolarity){
+    private void handleCase(INode p, INode s, boolean right, boolean diffPolarity) {
             if (right) {
-                if(diffPolarity) rotateRight(s);
-                rotateLeft(p);
+                if(diffPolarity) {
+                    s.getLeftChild().setColor(p.getColor());
+                    rotateRight(s);
+                    rotateLeft(p);
+                } else {
+                    s.getRightChild().setColor(s.getColor());
+                    s.setColor(p.getColor());
+                    rotateLeft(p);
+                }
             } else {
-                if(diffPolarity) rotateLeft(s);
-                rotateRight(p);
+                if(diffPolarity) {
+                    s.getRightChild().setColor(p.getColor());
+                    rotateLeft(s);
+                    rotateRight(p);
+                }
+                else {
+                    s.getLeftChild().setColor(s.getColor());
+                    s.setColor(p.getColor());
+                    rotateRight(p);
+                }
             }
+            p.setColor(INode.BLACK);
     }
 
-    private void fix_up_delete(INode newNode, INode p) {
+    private void fix_up_delete(INode newNode) {
+            INode p = newNode.getParent();
             if(newNode == getRoot()) {
-                newNode.setColor(INode.BLACK);
+                newNode.setColor(INode.BLACK);;
                 return;
             }
             INode s;
@@ -283,7 +310,10 @@ public class RedBlackTree implements IRedBlackTree {
             } else {
                 s = p.getRightChild();
             }
-            if(s.getValue() != null) {
+            if(s == null){
+                fix_up_delete(p);
+            }
+            if (s.getValue() != null) {
                 if(s.getColor() == INode.BLACK) {
                     INode l = s.getLeftChild();
                     INode r = s.getRightChild();
@@ -291,6 +321,7 @@ public class RedBlackTree implements IRedBlackTree {
                         if (getRightOrLeft(p, s)) {
                             if(r.getValue() != null && r.getColor() == INode.RED) {
                                 handleCase(p, s, true, false);
+                                r.setColor(INode.BLACK);
                             }
                             else if((r.getValue() == null || r.getColor() == INode.BLACK) && l.getValue() != null && l.getColor() == INode.RED){
                                 handleCase(p, s, true, true);
@@ -298,31 +329,30 @@ public class RedBlackTree implements IRedBlackTree {
                         } else {
                             if(l.getValue() != null && l.getColor() == INode.RED) {
                                 handleCase(p, s, false, false);
+                                l.setColor(INode.BLACK);
                             }
                             else if((l.getValue() == null || l.getColor() == INode.BLACK) && r.getValue() != null && r.getColor() == INode.RED){
                                 handleCase(p, s, false, true);
                             }
                         }
                     } else {
+                        s.setColor(INode.RED);
                         if(p.getColor() == INode.RED) p.setColor(INode.BLACK);
                         else {
-                            s.setColor(INode.RED);
-                            fix_up_delete(p,p.getParent());
+                            fix_up_delete(p);
                         }
                     }
                 } else {
+                    p.setColor(INode.RED);
+                    s.setColor(INode.BLACK);
                     if(getRightOrLeft(p,s)){
                         rotateLeft(p);
-                        p.setColor(INode.RED);
-                        s.setColor(INode.BLACK);
                     } else {
                         rotateRight(p);
-                        p.setColor(INode.RED);
-                        s.setColor(INode.BLACK);
                     }
-                    fix_up_delete(newNode,p);
+                    fix_up_delete(newNode);
                 }
-        }
+            }
     }
 
 
@@ -334,8 +364,8 @@ public class RedBlackTree implements IRedBlackTree {
         if(node.getValue() == null) return false;
         INode newNode = bstDelete(node);
         if(newNode == null) return true;
-        if( newNode.getValue() != null && (node.getColor() == INode.RED || newNode.getColor() == INode.RED)) newNode.setColor(INode.BLACK);
-        else fix_up_delete(newNode,node.getParent());
+        if(secondNode.getColor() == INode.RED || newNode.getColor() == INode.RED) newNode.setColor(INode.BLACK);
+        else fix_up_delete(newNode);
         return true;
     }
 
