@@ -368,19 +368,5 @@ public class RedBlackTree implements IRedBlackTree {
         else fix_up_delete(newNode);
         return true;
     }
-
-    public static void main(String[] args) {
-        RedBlackTree redBlackTree=new RedBlackTree();
-        redBlackTree.insert(311,1);
-        redBlackTree.insert(6887,1);
-        redBlackTree.insert(7095,1);
-        redBlackTree.insert(4023,1);
-        redBlackTree.insert(2482,1);
-        redBlackTree.delete(311);
-        redBlackTree.delete(6887);
-        redBlackTree.delete(7095);
-        redBlackTree.delete(4023);
-        redBlackTree.delete(2482);
-        redBlackTree=null;
-    }
+    
 }
