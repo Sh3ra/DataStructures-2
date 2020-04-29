@@ -2,6 +2,10 @@ package eg.edu.alexu.csd.filestructure.btree;
 
 public class SearchResult implements ISearchResult{
 
+    public SearchResult(String s, int i) {
+
+    }
+
     @Override
     public String getId() {
         return null;
