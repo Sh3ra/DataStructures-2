@@ -60,16 +60,17 @@ public class BTree implements IBTree{
     @Override
     public boolean delete(Comparable key) {
         IBTreeNode node=deleteSearch(key);
-        if(node.getNumOfKeys()>getMinimumDegree()-1)
-        {
-            List keys=node.getKeys();
-            for(int i=0;i<node.getNumOfKeys();i++)
-            {
-                if(key.compareTo(keys.get(i))==0)
-                {
-                    keys.remove(i);
-                    node.setKeys(keys);
+        if (node.isLeaf()) {
+            if (node.getNumOfKeys() > getMinimumDegree() - 1) {
+                List keys = node.getKeys();
+                for (int i = 0; i < node.getNumOfKeys(); i++) {
+                    if (key.compareTo(keys.get(i)) == 0) {
+                        keys.remove(i);
+                        node.setKeys(keys);
+                    }
                 }
+            }else if(node.getNumOfKeys() == getMinimumDegree() - 1){
+
             }
         }
         return false;
